@@ -1,0 +1,123 @@
+package bankproject;
+import java.util.Scanner;
+
+class BankManagement {
+    private String accountHolderName;
+    private String accountNumber;
+    private double balance;
+
+    BankManagement(String accountHolderName, String accountNumber, double balance) {
+        this.accountHolderName = accountHolderName;
+        this.accountNumber = accountNumber;
+        this.balance = balance;  
+    }
+
+    public void deposit(double amount) {
+        if (amount > 0) {
+            balance = balance + amount;
+            System.out.println(" Amount deposited successfully : " + balance);
+        } else {
+            System.out.println(" Invalid deposit amount!");
+        }
+    }
+
+    public void withdraw(double amount) {
+        if (amount > 0 && amount <= balance) {
+            balance = balance - amount;
+            System.out.println(" Amount withdrawn successfully : " + balance);
+        } else {
+            System.out.println(" Insufficient balance ");
+        }
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void displayAccountInfo() {
+        System.out.println("\n=== Account Information ===");
+        System.out.println("Account Holder Name : " + accountHolderName);
+        System.out.println("Account Number      : " + accountNumber);
+        System.out.println("Balance             : " + balance);
+    }
+}
+
+public class BankManage {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        BankManagement account = null; 
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("\n===== Bank Management System =====");
+            System.out.println("1. Create Account");
+            System.out.println("2. Deposit");
+            System.out.println("3. Withdraw");
+            System.out.println("4. Check Balance");
+            System.out.println("5. Balance Enquiry");
+            System.out.println("6. Exit");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine();  
+
+            switch (choice) {
+                case 1:
+                    if (account == null) {
+                        System.out.print("Enter Account Holder Name: ");
+                        String name = scanner.nextLine();
+                        System.out.print("Enter Account Number: ");
+                        String accNumber = scanner.nextLine();
+                        account = new BankManagement(name, accNumber, 0.0); 
+                        System.out.println(" Account created successfully!");
+                    } else {
+                        System.out.println(" Account already exists!");
+                    }
+                    break;
+
+                case 2:
+                    if (account != null) {
+                        System.out.print("Enter amount to deposit: ");
+                        double depositAmount = scanner.nextDouble();
+                        account.deposit(depositAmount);
+                    } else {
+                        System.out.println(" Please create an account first!");
+                    }
+                    break;
+
+                case 3:
+                    if (account != null) {
+                        System.out.print("Enter amount to withdraw: ");
+                        double withdrawAmount = scanner.nextDouble();
+                        account.withdraw(withdrawAmount);
+                    } else {
+                        System.out.println(" Please create an account first!");
+                    }
+                    break;
+
+                case 4:
+                    if (account != null) {
+                        System.out.println("Your Balance: " + account.getBalance());
+                    } else {
+                        System.out.println(" Please create an account first!");
+                    }
+                    break;
+
+                case 5:
+                    if (account != null) {
+                        account.displayAccountInfo();
+                    } else {
+                        System.out.println(" Please create an account first!");
+                    }
+                    break;
+
+                case 6:
+                    exit = true;
+                    System.out.println(" Thank you for using Bank Management System!");
+                    break;
+
+                default:
+                    System.out.println(" Invalid choice! Please try again.");
+            }
+        }
+    }
+}
